@@ -3,7 +3,7 @@
 // when user clicks anywhere on the button, the "printQuote" function is called
 document.getElementById('loadQuote').addEventListener("click", printQuote, false);
 
-
+//list of quotes from my favorite authors
 var quotes = [
   {
     quote: "The second half of a man's life is made up of nothing but the habits he has acquired during the first half.",
@@ -83,32 +83,37 @@ var quotes = [
     category: "wise"
   }
 ]
-var chossen = []
-
-
+//array where i store used quotes preventing it from repeating
+var bylyJuz = []
+//establishing function to generate random number within I pass my quotes array as a parameter
 function getRandomQuote(quo) {
-    var randomNumber = Math.floor(Math.random() * quo.length);
-    quo.splice(quo[randomNumber], 1);
-    chossen.push(quo[randomNumber]);
-    console.log(quo);
-    console.log(chossen);
-  return quo[randomNumber]
+//random number is generated between first and last object of my array
+    var randomNumber = Math.floor(Math.random() * (quo.length));
+      var chossen = quo[randomNumber];
+      var position = quo.indexOf(wybrany);
+      bylyJuz.push(chossen);
+      quo.splice(position, 1);
+      console.log(bylyJuz);
+      console.log(quo);
+      if (bylyJuz.length >= 11) {
+        quo.push.apply(quo, bylyJuz);
+        bylyJuz.length = 0;
+      }
+      return wybrany
 }
 
 
-function printQuote() {
-  var rdQuote = getRandomQuote(quotes);
+function colors() {
+  var red = Math.floor(Math.random() * 256);
+  var green = Math.floor(Math.random() * 256);
+  var blue = Math.floor(Math.random() * 256);
+  var rgb = "rgb(" + red + ", " + green + ", " + blue + ")";
+  return rgb
+}
 
-  if (rdQuote.category === "sad") {
-    document.body.style.backgroundColor = "black";
-    document.getElementById("loadQuote").style.backgroundColor = "black";
-  } else if (rdQuote.category === "wise") {
-    document.body.style.backgroundColor = "red";
-    document.getElementById("loadQuote").style.backgroundColor = "red";
-  } else {
-    document.body.style.backgroundColor = "#36b55c";
-    document.getElementById("loadQuote").style.backgroundColor = "#36b55c";
-  }
+function printQuote() {
+  var background = colors();
+  var rdQuote = getRandomQuote(quotes);
   var html = "<p class=\"quote\">" + rdQuote.quote + "</p>";
   html += "<p class=\"source\">" + rdQuote.source;
   if (rdQuote.citation === "") {
@@ -123,9 +128,12 @@ function printQuote() {
   }
   html += "</p>";
   document.getElementById("quote-box").innerHTML = html;
+  document.body.style.backgroundColor = background;
+  document.getElementById("loadQuote").style.backgroundColor = background;
   return rdQuote
 }
 
 
 
 printQuote();
+setInterval(printQuote, 30000);
