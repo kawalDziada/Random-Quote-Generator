@@ -102,7 +102,7 @@ function getRandomQuote(quo) {
       return wybrany
 }
 
-
+// Function genereating random color useing rgb values
 function colors() {
   var red = Math.floor(Math.random() * 256);
   var green = Math.floor(Math.random() * 256);
