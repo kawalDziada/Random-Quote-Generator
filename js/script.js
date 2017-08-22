@@ -71,33 +71,30 @@ var quotes = [
   {
     quote: "Oh, love isn't there to make us happy. I believe it exists to show us how much we can endure.",
     source: "Hermann Hesse",
-    citation: "",
     year: 1904,
     category: "happy"
   },
   {
     quote: "You can't make an omelet without breaking a few eggs.",
     source: "Famous proverb",
-    citation: "",
-    year: "",
     category: "wise"
   }
 ]
 //array where i store used quotes preventing it from repeating
-var wasBefore = []
+var wereBefore = []
 //establishing function to generate random number within I pass my quotes array as a parameter
 function getRandomQuote(quo) {
 //random number is generated between first and last object of my array
     var randomNumber = Math.floor(Math.random() * (quo.length));
       var chossen = quo[randomNumber];
       var position = quo.indexOf(chossen);
-      wasBefore.push(chossen);
+      wereBefore.push(chossen);
       quo.splice(position, 1);
-      console.log(wasBefore);
+      console.log(wereBefore);
       console.log(quo);
-      if (wasBefore.length >= 11) {
-        quo.push.apply(quo, wasBefore);
-        wasBefore.length = 0;
+      if (wereBefore.length >= 11) {
+        quo.push.apply(quo, wereBefore);
+        wereBefore = [];
       }
       return chossen
 }
@@ -113,27 +110,27 @@ function colors() {
 
 function printQuote() {
   var background = colors();
-  var rdQuote = getRandomQuote(quotes);
-  var html = "<p class=\"quote\">" + rdQuote.quote + "</p>";
-  html += "<p class=\"source\">" + rdQuote.source;
-  if (rdQuote.citation === "") {
+  var onScreen = getRandomQuote(quotes);
+  var html = "<p class=\"quote\">" + onScreen.quote + "</p>";
+
+  html += "<p class=\"source\">" + onScreen.source;
+  if (onScreen.citation === undefined) {
     html += "";
   } else {
-    html += "<span class=\"citation\">" + rdQuote.citation + "</span>";
+    html += "<span class=\"citation\">" + onScreen.citation + "</span>";
   }
-  if (rdQuote.year === "") {
+  if (onScreen.year === undefined) {
     html += "";
   } else {
-    html += "<span class=\"year\">" + rdQuote.year + "</spam>";
+    html += "<span class=\"year\">" + onScreen.year + "</spam>";
   }
   html += "</p>";
+  
   document.getElementById("quote-box").innerHTML = html;
   document.body.style.backgroundColor = background;
   document.getElementById("loadQuote").style.backgroundColor = background;
-  return rdQuote
+  return onScreen
 }
-
-
 
 printQuote();
 setInterval(printQuote, 30000);
