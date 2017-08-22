@@ -84,22 +84,22 @@ var quotes = [
   }
 ]
 //array where i store used quotes preventing it from repeating
-var bylyJuz = []
+var wasBefore = []
 //establishing function to generate random number within I pass my quotes array as a parameter
 function getRandomQuote(quo) {
 //random number is generated between first and last object of my array
     var randomNumber = Math.floor(Math.random() * (quo.length));
       var chossen = quo[randomNumber];
-      var position = quo.indexOf(wybrany);
-      bylyJuz.push(chossen);
+      var position = quo.indexOf(chossen);
+      wasBefore.push(chossen);
       quo.splice(position, 1);
-      console.log(bylyJuz);
+      console.log(wasBefore);
       console.log(quo);
-      if (bylyJuz.length >= 11) {
-        quo.push.apply(quo, bylyJuz);
-        bylyJuz.length = 0;
+      if (wasBefore.length >= 11) {
+        quo.push.apply(quo, wasBefore);
+        wasBefore.length = 0;
       }
-      return wybrany
+      return chossen
 }
 
 // Function genereating random color useing rgb values
