@@ -86,17 +86,22 @@ var wereBefore = []
 function getRandomQuote(quo) {
 //random number is generated between first and last object of my array
     var randomNumber = Math.floor(Math.random() * (quo.length));
-      var chossen = quo[randomNumber];
-      var position = quo.indexOf(chossen);
-      wereBefore.push(chossen);
+      // I establish variable "chosen" with a value of randomly chosen object inside "quotes" array
+      var chosen = quo[randomNumber];
+      // I establish another varibale "position" to get accurate position of randomly chosen object inside an array
+      var position = quo.indexOf(chosen);
+      // pushing object into new created array "wereBefore"
+      wereBefore.push(chosen);
+      // I delete randomly chosne object from quotes array
       quo.splice(position, 1);
       console.log(wereBefore);
       console.log(quo);
+      //after number of object inside "wereBefore" arry reach 11 object I push all the objects back to "quotes" array and cleare "wereBefore" array
       if (wereBefore.length >= 11) {
         quo.push.apply(quo, wereBefore);
         wereBefore = [];
       }
-      return chossen
+      return chosen
 }
 
 // Function genereating random color useing rgb values
@@ -104,33 +109,37 @@ function colors() {
   var red = Math.floor(Math.random() * 256);
   var green = Math.floor(Math.random() * 256);
   var blue = Math.floor(Math.random() * 256);
+  // I concat randomly chosen values into into string and assign it to a "egb" variable
   var rgb = "rgb(" + red + ", " + green + ", " + blue + ")";
   return rgb
 }
 
 function printQuote() {
+  // variable background has value witch it returned by a "color" function
   var background = colors();
+  // "onScreen" variable has value of "getRandomQuote" function to witch I pass "quotes" array as a parameter
   var onScreen = getRandomQuote(quotes);
+  // I concat properties of randomly chosen object into string and assign it to a "html" variable
   var html = "<p class=\"quote\">" + onScreen.quote + "</p>";
-
   html += "<p class=\"source\">" + onScreen.source;
-  if (onScreen.citation === undefined) {
-    html += "";
-  } else {
+  // I display propertie "citation" only if it is not left out
+  if (onScreen.citation) {
     html += "<span class=\"citation\">" + onScreen.citation + "</span>";
   }
-  if (onScreen.year === undefined) {
-    html += "";
-  } else {
-    html += "<span class=\"year\">" + onScreen.year + "</spam>";
+  // I display propertie "year" only if it is not left out
+  if (onScreen.year) {
+    html += "<span class=\"year\">" + onScreen.year + "</span>";
   }
   html += "</p>";
-  
+  // I display ready "html" variable on screen
   document.getElementById("quote-box").innerHTML = html;
+  // I change background color evry time new quote is displayed on screen
   document.body.style.backgroundColor = background;
+  // and button as well
   document.getElementById("loadQuote").style.backgroundColor = background;
   return onScreen
 }
-
+// I call "printQuote" function to make everything works
 printQuote();
+// every 30 secound quote changes by itself
 setInterval(printQuote, 30000);
